@@ -218,12 +218,6 @@ services:
     ports:
       - '7233:7233'
     image: temporalio/auto-setup:1.28.1
-    healthcheck:
-    test: ["CMD-SHELL", "temporal --address temporal:7233 operator cluster health | grep -q SERVING"]
-    interval: 15s
-    timeout: 5s
-    retries: 20
-    start_period: 60s
     depends_on:
       - temporal-postgresql
       - temporal-elasticsearch
@@ -239,6 +233,12 @@ services:
       - ES_VERSION=v7
       - TEMPORAL_NAMESPACE=default
       - SKIP_DEFAULT_SEARCH_ATTRIBUTES=true
+    healthcheck:
+      test: ["CMD-SHELL", "temporal --address temporal:7233 operator cluster health | grep -q SERVING"]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+      start_period: 60s
     networks:
       - temporal-network
     volumes:

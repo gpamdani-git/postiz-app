@@ -130,8 +130,6 @@ services:
       - postiz-network
       - temporal-network
     depends_on:
-      temporal:
-        condition: service_healthy
       postiz-postgres:
         condition: service_healthy
       postiz-redis:
@@ -219,8 +217,9 @@ services:
       - '7233:7233'
     image: temporalio/auto-setup:1.28.1
     depends_on:
-      - temporal-postgresql
-      - temporal-elasticsearch
+      - postgres
+      - redis
+      - temporal
     environment:
       - DB=postgres12
       - DB_PORT=5432
@@ -234,12 +233,6 @@ services:
       - TEMPORAL_NAMESPACE=default
       - SKIP_DEFAULT_SEARCH_ATTRIBUTES=true
       - CONNECT_ATTEMPTS=60
-    healthcheck:
-       test: ["CMD-SHELL", "temporal operator cluster health --address $$(hostname -i):7233 | grep -q SERVING"]
-      interval: 15s
-      timeout: 5s
-      retries: 10
-      start_period: 30s
     networks:
       - temporal-network
     volumes:

@@ -238,6 +238,7 @@ services:
       - ES_SEEDS=temporal-elasticsearch
       - ES_VERSION=v7
       - TEMPORAL_NAMESPACE=default
+      - SKIP_DEFAULT_SEARCH_ATTRIBUTES=true
     networks:
       - temporal-network
     volumes:

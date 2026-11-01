@@ -26,6 +26,7 @@ import { getSsrfSafeDispatcher } from '@gitroom/nestjs-libraries/dtos/webhooks/s
 import { setHeartbeatDetails } from '@gitroom/nestjs-libraries/temporal/temporal.heartbeat';
 import { Rules } from '@gitroom/nestjs-libraries/chat/rules.description.decorator';
 import { DashboardFunction } from '@gitroom/nestjs-libraries/integrations/dashboard.function.decorator';
+import { hasExtension } from '@gitroom/helpers/utils/has.extension';
 
 const clientAndYoutube = () => {
   const client = new google.auth.OAuth2({
@@ -606,7 +607,7 @@ export class YoutubeProvider extends SocialAbstract implements SocialProvider {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           'Content-Type': 'application/json; charset=UTF-8',
-          'X-Upload-Content-Type': 'video/mp4',
+          'X-Upload-Content-Type': hasExtension(path, 'mov') ? 'video/quicktime' : 'video/mp4',
           'X-Upload-Content-Length': String(videoSize),
         },
         body: JSON.stringify({
@@ -762,7 +763,7 @@ export class YoutubeProvider extends SocialAbstract implements SocialProvider {
             method: 'PUT',
             headers: {
               Authorization: `Bearer ${accessToken}`,
-              'Content-Type': 'video/mp4',
+              'Content-Type': hasExtension(pendingData.path, 'mov') ? 'video/quicktime' : 'video/mp4',
               'Content-Length': String(end - uploaded + 1),
               'Content-Range': `bytes ${uploaded}-${end}/${pendingData.videoSize}`,
             },

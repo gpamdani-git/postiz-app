@@ -62,7 +62,7 @@ export const uploadWidgetHtml = (backendUrl: string) => `<!DOCTYPE html>
   <label id="drop" class="disabled">
     Choose files or drop them here
     <small>Images up to ${megabytes('image/png')} MB and videos up to ${megabytes('video/mp4')} MB</small>
-    <input id="file" type="file" accept="image/*,video/mp4" multiple />
+    <input id="file" type="file" accept="image/*,video/mp4,video/quicktime" multiple />
   </label>
   <div id="files"></div>
   <div id="error"></div>

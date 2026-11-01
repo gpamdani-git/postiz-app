@@ -29,14 +29,14 @@ const ALLOWED_EXT_TO_MIME: Record<string, string> = {
   '.tif': 'image/tiff',
   '.tiff': 'image/tiff',
   '.mp4': 'video/mp4',
+  '.mov': 'video/quicktime',
 };
 
-// Multipart uploads go through the normalizer, so they may also carry
-// QuickTime, which it turns into an mp4; simple uploads never do
+// Multipart uploads go through the normalizer when available, and accept QuickTime
 function multipartExtToMime(): Record<string, string> {
   return {
     ...ALLOWED_EXT_TO_MIME,
-    ...(UploadFactory.processorEnabled() ? { '.mov': 'video/quicktime' } : {}),
+    '.mov': 'video/quicktime',
   };
 }
 

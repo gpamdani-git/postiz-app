@@ -895,7 +895,7 @@ export class TiktokProvider extends SocialAbstract implements SocialProvider {
           upload_url,
           videoPath,
           videoSize,
-          'video/mp4'
+          hasExtension(videoPath, 'mov') ? 'video/quicktime' : 'video/mp4'
         );
       } catch (err) {
         // An explicit rejection from TikTok: the post won't publish, fail it

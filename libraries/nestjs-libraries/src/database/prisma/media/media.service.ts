@@ -74,6 +74,7 @@ const PROCESSABLE: Record<
 // Formats a post can carry without normalization; anything else only exists to be converted
 const USABLE_AS_IS = new Set([
   '.mp4',
+  '.mov',
   '.jpg',
   '.jpeg',
   '.png',
